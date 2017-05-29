@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>MinPQTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">StablePriorityQueue_MIN (May 28, 2017 11:45:06 PM)</a> &gt; <a href="../../index.html" class="el_group">StablePriorityQueue_MIN</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">MinPQTest.java</span></div><h1>MinPQTest.java</h1><pre class="source lang-java linenums">/**
+ * @author Ekta Arora 
+ * 
+ *         Description of the file: 
+ *         	This Java file is the test suit for MinPQ.java file. 
+ *         	It tests for:
+ *        		- insertion of a new element in the queue
+ * 				- detecting minimum element from the queue
+ * 				- extracting the minimum element from the queue
+ * 
+ *        Requirements for the file:
+ * 			To execute this file, following two jars must be included in the classpath:
+ * 				- junit.jar
+ * 				- hamcrest-core.jar
+ * 
+ */
+
+import org.junit.Test;
+
+import junit.framework.TestCase;
+
+<span class="fc" id="L22">public class MinPQTest extends TestCase {</span>
+
+<span class="fc" id="L24">	MinPQ minPQ = null;</span>
+
+	/**
+	 * Test case to test the insertion of a new element into the min queue
+	 */
+	@Test
+	public void testInsertion() {
+
+		// When a new object is created, the maximum size of the queue must be
+		// passed to the constructor.
+		// If the maximum size passed as parameter is less than equal to zero,
+		// the maximum size of the queue is set to zero and queue is not created
+<span class="fc" id="L36">		minPQ=new MinPQ(0);</span>
+<span class="fc" id="L37">		assertEquals(0, minPQ.getMaxSize());</span>
+		
+<span class="fc" id="L39">		minPQ=new MinPQ(-5);</span>
+<span class="fc" id="L40">		assertEquals(0, minPQ.getMaxSize());</span>
+		
+<span class="fc" id="L42">		minPQ = new MinPQ(5);</span>
+<span class="fc" id="L43">		assertNotNull(minPQ);</span>
+<span class="fc" id="L44">		assertEquals(5, minPQ.getMaxSize());</span>
+<span class="fc" id="L45">		assertEquals(-1, minPQ.getCurrentSize());</span>
+<span class="fc" id="L46">		assertTrue(minPQ.insert(5));</span>
+<span class="fc" id="L47">		assertEquals(0, minPQ.getCurrentSize());</span>
+<span class="fc" id="L48">		assertTrue(minPQ.insert(2));</span>
+<span class="fc" id="L49">		assertEquals(1, minPQ.getCurrentSize());</span>
+<span class="fc" id="L50">		assertTrue(minPQ.insert(10));</span>
+<span class="fc" id="L51">		assertEquals(2, minPQ.getCurrentSize());</span>
+<span class="fc" id="L52">		assertTrue(minPQ.insert(0));</span>
+<span class="fc" id="L53">		assertEquals(3, minPQ.getCurrentSize());</span>
+<span class="fc" id="L54">		assertFalse(minPQ.insert(Integer.MIN_VALUE));</span>
+<span class="fc" id="L55">		assertEquals(3, minPQ.getCurrentSize());</span>
+<span class="fc" id="L56">		assertTrue(minPQ.insert(2));</span>
+<span class="fc" id="L57">		assertEquals(4, minPQ.getCurrentSize());</span>
+<span class="fc" id="L58">		assertFalse(minPQ.insert(3));</span>
+<span class="fc" id="L59">		assertEquals(4, minPQ.getCurrentSize());</span>
+
+<span class="fc" id="L61">	}</span>
+
+	/**
+	 * Test case to test the minimum element of the min queue. Queue head is
+	 * returned, which hold the minimum element of the min queue
+	 */
+	@Test
+	public void testFindMinimum() {
+<span class="fc" id="L69">		minPQ = createAndInsert();</span>
+
+<span class="fc" id="L71">		assertEquals(0, minPQ.minimum());</span>
+<span class="fc" id="L72">		assertNotSame(2, minPQ.minimum());</span>
+<span class="fc" id="L73">	}</span>
+
+	/**
+	 * Test case to test the extract the minimum element of the min queue. Queue
+	 * head is returned, which hold the minimum element of the min queue and the
+	 * size of the min queue is reduced by 1 element.
+	 */
+	@Test
+	public void testGetMinimum() {
+<span class="fc" id="L82">		minPQ = createAndInsert();</span>
+
+<span class="fc" id="L84">		assertEquals(0, minPQ.extractMin());</span>
+<span class="fc" id="L85">		assertEquals(2, minPQ.extractMin());</span>
+<span class="fc" id="L86">		assertEquals(2, minPQ.extractMin());</span>
+<span class="fc" id="L87">		assertEquals(2, minPQ.extractMin()); </span>
+<span class="fc" id="L88">		assertNotSame(10, minPQ.extractMin());</span>
+<span class="fc" id="L89">		assertEquals(10, minPQ.extractMin());</span>
+<span class="fc" id="L90">		assertEquals(-1, minPQ.extractMin());</span>
+<span class="fc" id="L91">		assertNotSame(2, minPQ.extractMin());</span>
+<span class="fc" id="L92">	}</span>
+
+	/**
+	 * Local function to create and return a new object of the min queue with
+	 * elements inserted into the queue. This function is used is a helper
+	 * function for testFindMinimum() and testGetMinimum() test cases.
+	 */
+	MinPQ createAndInsert() {
+<span class="fc" id="L100">		minPQ = new MinPQ(6);</span>
+<span class="fc" id="L101">		assertNotNull(minPQ);</span>
+<span class="fc" id="L102">		assertTrue(minPQ.insert(5));</span>
+<span class="fc" id="L103">		assertTrue(minPQ.insert(2));</span>
+<span class="fc" id="L104">		assertTrue(minPQ.insert(2)); </span>
+<span class="fc" id="L105">		assertTrue(minPQ.insert(10));</span>
+<span class="fc" id="L106">		assertTrue(minPQ.insert(0));</span>
+<span class="fc" id="L107">		assertTrue(minPQ.insert(2));</span>
+
+<span class="fc" id="L109">		return minPQ;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span>StablePriorityQueue_MIN (May 28, 2017 11:45:06 PM)</div></body></html>

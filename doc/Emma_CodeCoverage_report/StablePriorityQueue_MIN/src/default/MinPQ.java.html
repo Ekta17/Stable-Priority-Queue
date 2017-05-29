@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>MinPQ.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">StablePriorityQueue_MIN (May 28, 2017 11:45:06 PM)</a> &gt; <a href="../../index.html" class="el_group">StablePriorityQueue_MIN</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">MinPQ.java</span></div><h1>MinPQ.java</h1><pre class="source lang-java linenums">/**
+ * @author Ekta Arora
+ * 
+ *         Description of the file: 
+ *         	This Java file is used to create stable min priority queue. 
+ *         	It performs the following operations: 
+ *         		- insertion of new element in the min queue. 
+ *         		- extracting the minimum element from the min queue. 
+ *         		- finding the minimum element of the min queue.
+ *         
+ *         TestCase:
+ *         	To test this file, use MinPQTest.java file
+ * 
+ *         References: 
+ *         	Following references were used to design the algorithm of the min priority queue: 
+ *         		Introduction to Algorithms, Third Edition 
+ *         			-By Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest and Clifford Stein
+ *         			Chapter 6 Heapsort
+ * 
+ */
+
+public class MinPQ {
+
+	private int[] queue; // to hold the elements
+	private int[] priorityQueue; // to hold counter, which is the insertion order of the elements
+	private int maxSize; //Maximum number of elements which can be held by the Queue
+	private int currentSize; //Current size, increments with every addition of a new element
+	private int counter; // to keep track of insertion order
+	
+	//Getter and Setter
+	public int getMaxSize() {
+<span class="fc" id="L32">		return maxSize;</span>
+	}
+	
+	public int getCurrentSize() {
+<span class="fc" id="L36">		return currentSize;</span>
+	}
+
+	// Constructor
+<span class="fc" id="L40">	public MinPQ(int size){</span>
+
+<span class="fc" id="L42">		maxSize=size;</span>
+		//Only if the max size is greater than zero, new queue is created. 
+<span class="fc bfc" id="L44" title="All 2 branches covered.">		if (getMaxSize() &gt; 0) {</span>
+<span class="fc" id="L45">			this.currentSize = -1;</span>
+<span class="fc" id="L46">			this.counter = 0;</span>
+<span class="fc" id="L47">			queue = new int[maxSize];</span>
+<span class="fc" id="L48">			priorityQueue = new int[maxSize];</span>
+<span class="fc" id="L49">		}else</span>
+<span class="fc" id="L50">			maxSize=0;</span>
+<span class="fc" id="L51">	}</span>
+
+	/**
+	 * Method to insert a new element into the min queue. 
+	 * The new element may not be inserted into the queue due to the following reasons:
+	 * 	- The size of the queue is full and no new element can be inserted.
+	 * 	- The new element passed is less than the allowed minimum value of an integer in java.
+	 * 
+	 * @param newElement : element to be inserted in the queue
+	 * @return 
+	 * 		true: if new element is successfully inserted into the queue
+	 * 		false: if new element could not be inserted into the queue 
+	 */
+	
+	public boolean insert(int newElement) {
+<span class="fc bfc" id="L66" title="All 2 branches covered.">		if (currentSize == maxSize-1) {</span>
+<span class="fc" id="L67">			System.out.println(&quot;Queue is full&quot;);</span>
+<span class="fc" id="L68">			return false;</span>
+<span class="fc bfc" id="L69" title="All 2 branches covered.">		}else if(newElement &lt;= Integer.MIN_VALUE){</span>
+<span class="fc" id="L70">			System.out.println(&quot;error: new element smaller than current element&quot;);</span>
+<span class="fc" id="L71">			return false;</span>
+		}else {
+<span class="fc" id="L73">			currentSize = currentSize + 1;</span>
+<span class="fc" id="L74">			counter = counter + 1;</span>
+<span class="fc" id="L75">			queue[currentSize] = Integer.MIN_VALUE;</span>
+<span class="fc" id="L76">			priorityQueue[currentSize] = Integer.MIN_VALUE;</span>
+
+<span class="fc" id="L78">			return HEAP_INCREASE_KEY(currentSize, newElement);</span>
+		}
+	}
+	
+	/**
+	 * Helper method to insert the new element in the queue at the right position 
+	 * such that min priority queue property is maintained.
+	 * 
+	 * @param index : The position at which the new element should be inserted
+	 * @param newElement : element to be inserted
+	 * @return 
+	 * 		true: if new element is successfully inserted into the queue
+	 * 		false: if new element could not be inserted into the queue 
+	 */
+	private boolean HEAP_INCREASE_KEY(int index, int newElement) {
+		
+<span class="fc" id="L94">		queue[index] = newElement;</span>
+<span class="fc" id="L95">		priorityQueue[index] = counter;</span>
+
+<span class="fc" id="L97">		int temp = 0;</span>
+
+<span class="fc bfc" id="L99" title="All 4 branches covered.">		while (index &gt; 0 &amp;&amp; queue[index / 2] &gt; queue[index]) {</span>
+<span class="fc" id="L100">			temp = queue[index];</span>
+<span class="fc" id="L101">			queue[index] = queue[index / 2];</span>
+<span class="fc" id="L102">			queue[index / 2] = temp;</span>
+
+<span class="fc" id="L104">			temp = priorityQueue[index];</span>
+<span class="fc" id="L105">			priorityQueue[index] = priorityQueue[index / 2];</span>
+<span class="fc" id="L106">			priorityQueue[index / 2] = temp;</span>
+
+<span class="fc" id="L108">			index = index / 2;</span>
+		}
+
+<span class="fc" id="L111">		displayQueue();</span>
+		
+<span class="fc" id="L113">		return true;</span>
+	}
+
+	/**
+	 * Method to extract the minimum element from the min queue. 
+	 * The minimum element is returned and the size of the queue is decreased by 1 element.
+	 * 
+	 * @return
+	 * 		element: minimum element of the queue
+	 */
+	
+	public int extractMin() {
+<span class="fc bfc" id="L125" title="All 2 branches covered.">		if (currentSize &lt; 0) {</span>
+<span class="fc" id="L126">			System.out.println(&quot;Queue is empty&quot;);</span>
+<span class="fc" id="L127">			return -1;</span>
+		}
+		
+		//Min element is the head of the max queue
+<span class="fc" id="L131">		int minValue = queue[0];</span>
+
+<span class="fc" id="L133">		int temp = 0;</span>
+		//This loop is to maintain the stability of the priority queue 
+		//i.e. when two elements with same value are present in the queue, 
+		//the FIFO property of the queue is checked and the 
+		//element which was inserted first is extracted from the queue first. 
+		//To check the insertion order of the elements, priorityQueue[] is referred. 
+<span class="fc bfc" id="L139" title="All 2 branches covered.">		for (int i = 1; i &lt;= currentSize; i++) {</span>
+<span class="fc bfc" id="L140" title="All 2 branches covered.">			if (minValue == queue[i]) {</span>
+				// found duplicate element
+<span class="fc bfc" id="L142" title="All 2 branches covered.">				if (priorityQueue[i] &lt; priorityQueue[0]) {</span>
+<span class="fc" id="L143">					temp = queue[i];</span>
+<span class="fc" id="L144">					queue[i] = queue[0];</span>
+<span class="fc" id="L145">					queue[0] = temp;</span>
+
+<span class="fc" id="L147">					temp = priorityQueue[i];</span>
+<span class="fc" id="L148">					priorityQueue[i] = priorityQueue[0];</span>
+<span class="fc" id="L149">					priorityQueue[0] = temp;</span>
+				}
+			}
+		}
+
+<span class="fc" id="L154">		queue[0] = queue[currentSize];</span>
+<span class="fc" id="L155">		currentSize = currentSize - 1;</span>
+		//Once the element is extracted, the min heapify helper function 
+		//is used to maintain the property of heap in the min queue
+<span class="fc" id="L158">		MIN_HEAPIFY(0);</span>
+
+<span class="fc" id="L160">		displayQueue();</span>
+		
+<span class="fc" id="L162">		return minValue;</span>
+	}
+
+	/**
+	 * This a helper function used to maintain the property of the min priority queue designed as heap. 
+	 * Such that the parent element is lesser than its two left and right children in the heap. 
+	 * 
+	 * @param index : position of the element to start the check of the  min priority queue property
+	 */
+	
+	private void MIN_HEAPIFY(int index) {
+<span class="fc" id="L173">		int left = 2 * index + 1;</span>
+<span class="fc" id="L174">		int right = 2 * index + 2;</span>
+
+<span class="fc" id="L176">		int minimum = Integer.MIN_VALUE;</span>
+
+<span class="fc bfc" id="L178" title="All 4 branches covered.">		if (left &lt;= currentSize &amp;&amp; queue[left] &lt; queue[index])</span>
+<span class="fc" id="L179">			minimum = left;</span>
+		else
+<span class="fc" id="L181">			minimum = index;</span>
+
+<span class="fc bfc" id="L183" title="All 4 branches covered.">		if (right &lt;= currentSize &amp;&amp; queue[right] &lt; queue[minimum])</span>
+<span class="fc" id="L184">			minimum = right;</span>
+
+<span class="fc" id="L186">		int temp = 0;</span>
+<span class="fc bfc" id="L187" title="All 2 branches covered.">		if (minimum != index) {</span>
+<span class="fc" id="L188">			temp = queue[index];</span>
+<span class="fc" id="L189">			queue[index] = queue[minimum];</span>
+<span class="fc" id="L190">			queue[minimum] = temp;</span>
+
+<span class="fc" id="L192">			temp = priorityQueue[index];</span>
+<span class="fc" id="L193">			priorityQueue[index] = priorityQueue[minimum];</span>
+<span class="fc" id="L194">			priorityQueue[minimum] = temp;</span>
+
+<span class="fc" id="L196">			MIN_HEAPIFY(minimum);</span>
+		}
+<span class="fc" id="L198">	}</span>
+
+	/**
+	 * Method to find the minimum element of the min queue. 
+	 * The minimum element is stored at the head of the min queue. 
+	 * Only the value is returned and the size of the queue is not affected by this operation
+	 * 
+	 * @return
+	 * 		element : min element of the min priority queue
+	 */
+	
+	public int minimum() {
+<span class="fc" id="L210">		return queue[0];</span>
+	}
+
+	/**
+	 * The function to display the contents of the queue. 
+	 */
+	private void displayQueue() {
+<span class="fc bfc" id="L217" title="All 2 branches covered.">		if (currentSize &lt;= -1) {</span>
+<span class="fc" id="L218">			System.out.println(&quot;Queue is Empty--&gt; add elements first&quot;);</span>
+<span class="fc" id="L219">		} else {</span>
+<span class="fc bfc" id="L220" title="All 2 branches covered.">			for (int i = 0; i &lt;= currentSize; i++) {</span>
+<span class="fc" id="L221">				System.out.print(+queue[i]);</span>
+<span class="fc bfc" id="L222" title="All 2 branches covered.">				if (i != currentSize)</span>
+<span class="fc" id="L223">					System.out.print(&quot; , &quot;);</span>
+			}
+		}
+<span class="fc" id="L226">		System.out.println(&quot;&quot;);</span>
+<span class="fc" id="L227">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span>StablePriorityQueue_MIN (May 28, 2017 11:45:06 PM)</div></body></html>

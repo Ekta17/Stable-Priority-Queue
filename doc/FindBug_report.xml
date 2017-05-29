@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<BugCollection version="3.0.1-dev-20150306-5afe4d1" sequence="1" timestamp="1496029304386" analysisTimestamp="1496029286173" release="">
+  <Project projectName="StablePriorityQueue_MIN">
+    <Jar>\workspace\StablePriorityQueue_MIN\bin</Jar>
+    <AuxClasspathEntry>\workspace\StablePriorityQueue_MIN\bin</AuxClasspathEntry>
+    <AuxClasspathEntry>\project\jar\hamcrest-core-1.3.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>\project\jar\junit-4.12.jar</AuxClasspathEntry>
+    <AuxClasspathEntry>\Java\jdk1.8.0_73\jre\lib\rt.jar</AuxClasspathEntry>
+    <SrcDir>\workspace\StablePriorityQueue_MIN\src</SrcDir>
+    <Cloud id="edu.umd.cs.findbugs.cloud.doNothingCloud" online="false"></Cloud>
+  </Project>
+  <Errors errors="0" missingClasses="0"></Errors>
+  <FindBugsSummary timestamp="Sun, 28 May 2017 23:37:51 -0400" total_classes="2" referenced_classes="35" total_bugs="0" total_size="153" num_packages="1" java_version="1.8.0_73" vm_version="25.73-b02" cpu_seconds="53.30" clock_seconds="94.27" peak_mbytes="852.23" alloc_mbytes="1024.00" gc_seconds="0.53">
+    <PackageStats package="" total_bugs="0" total_types="2" total_size="153">
+      <ClassStats class="MinPQ" sourceFile="MinPQ.java" interface="false" size="98" bugs="0"/>
+      <ClassStats class="MinPQTest" sourceFile="MinPQTest.java" interface="false" size="55" bugs="0"/>
+    </PackageStats>
+    <FindBugsProfile>
+      <ClassProfile name="de.tobject.findbugs.builder.FindBugs2Eclipse" totalMilliseconds="1262" invocations="2" avgMicrosecondsPerInvocation="631484" maxMicrosecondsPerInvocation="850464" standardDeviationMircosecondsPerInvocation="218980"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.ClassInfoAnalysisEngine" totalMilliseconds="725" invocations="372" avgMicrosecondsPerInvocation="1951" maxMicrosecondsPerInvocation="186243" standardDeviationMircosecondsPerInvocation="10537"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FieldItemSummary" totalMilliseconds="232" invocations="35" avgMicrosecondsPerInvocation="6648" maxMicrosecondsPerInvocation="63770" standardDeviationMircosecondsPerInvocation="13304"/>
+      <ClassProfile name="edu.umd.cs.findbugs.OpcodeStack$JumpInfoFactory" totalMilliseconds="178" invocations="89" avgMicrosecondsPerInvocation="2001" maxMicrosecondsPerInvocation="61538" standardDeviationMircosecondsPerInvocation="6763"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.NoteCheckReturnValueAnnotations" totalMilliseconds="154" invocations="35" avgMicrosecondsPerInvocation="4428" maxMicrosecondsPerInvocation="149587" standardDeviationMircosecondsPerInvocation="24895"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.UnconditionalValueDerefDataflowFactory" totalMilliseconds="135" invocations="14" avgMicrosecondsPerInvocation="9711" maxMicrosecondsPerInvocation="109725" standardDeviationMircosecondsPerInvocation="27805"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.bcel.JavaClassAnalysisEngine" totalMilliseconds="112" invocations="54" avgMicrosecondsPerInvocation="2079" maxMicrosecondsPerInvocation="59344" standardDeviationMircosecondsPerInvocation="8289"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.FindNoSideEffectMethods" totalMilliseconds="103" invocations="35" avgMicrosecondsPerInvocation="2949" maxMicrosecondsPerInvocation="24575" standardDeviationMircosecondsPerInvocation="4696"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.NoteDirectlyRelevantTypeQualifiers" totalMilliseconds="97" invocations="35" avgMicrosecondsPerInvocation="2785" maxMicrosecondsPerInvocation="43509" standardDeviationMircosecondsPerInvocation="7421"/>
+      <ClassProfile name="edu.umd.cs.findbugs.classfile.engine.ClassDataAnalysisEngine" totalMilliseconds="94" invocations="375" avgMicrosecondsPerInvocation="252" maxMicrosecondsPerInvocation="5804" standardDeviationMircosecondsPerInvocation="382"/>
+      <ClassProfile name="edu.umd.cs.findbugs.detect.OverridingEqualsNotSymmetrical" totalMilliseconds="77" invocations="35" avgMicrosecondsPerInvocation="2208" maxMicrosecondsPerInvocation="52450" standardDeviationMircosecondsPerInvocation="8670"/>
+    </FindBugsProfile>
+  </FindBugsSummary>
+  <ClassFeatures></ClassFeatures>
+  <History>
+    <AppVersion sequence="0" timestamp="1496029304382" release="" codeSize="0" numClasses="0"/>
+  </History>
+</BugCollection>
